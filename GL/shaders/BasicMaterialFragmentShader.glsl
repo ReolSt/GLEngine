@@ -124,7 +124,7 @@ vec3 ApplyPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
     diffuse *= attenuation;
     specular *= attenuation;
 
-    return (ambient + diffuse + specular);
+    return (ambient + diffuse);
 }
 
 vec3 ApplySpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
@@ -163,7 +163,7 @@ void main()
 {
     vec3 norm = normalize(normal);
     vec3 fragPos = vec3(fragPosition);
-    vec3 viewDir = vec3(viewMatrix * vec4(normalize(viewPosition - fragPos), 1.0));
+    vec3 viewDir = normalize(viewPosition - fragPos);
 
     vec3 result = vec3(0.0);
 

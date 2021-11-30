@@ -15,8 +15,7 @@
 class GLShaderLoader
 {
 public:
-	GLShaderLoader() 
-		: Id(-1) { }
+	GLShaderLoader() { }
 
 	GLShaderLoader(const std::string& filename)
 	{
@@ -78,7 +77,7 @@ public:
 protected:
 	std::string Source;
 
-	unsigned int Id;
+	unsigned int Id = -1;
 };
 
 class GLVertexShaderLoader : public GLShaderLoader
@@ -152,42 +151,7 @@ public:
 class GLShader
 {
 public:
-	static std::shared_ptr<GLShader> GetDefaultShader()
-	{
-		static std::string vertexSource =
-			"#version 330 core\n"
-			"layout(location = 0) in vec4 in_Position;\n"
-			"layout(location = 1) in vec4 in_Color;\n"
-			"layout(location = 2) in vec4 in_Normal;\n"
-			"out vec4 out_Color;\n"
-			"uniform mat4 cameraMatrix;\n"
-			"uniform mat4 modelMatrix;\n"
-			"void main() {\n"
-			"    gl_Position = cameraMatrix * modelMatrix * in_Position;\n"
-			"    out_Color = in_Color;\n"
-			"}\n";
-
-		static std::string fragmentSource =
-			"#version 330 core\n"
-			"in vec4 out_Color;\n"
-			"out vec4 fragColor;\n"
-			"void main() {\n"
-			"    fragColor = vec4(out_Color);\n"
-			"}\n";
-
-		GLVertexShaderLoader vertexShader;
-		vertexShader.SetSource(vertexSource);
-		vertexShader.Load();
-
-		GLFragmentShaderLoader fragmentShader;
-		fragmentShader.SetSource(fragmentSource);
-		fragmentShader.Load();
-
-		return GLCreate<GLShader>(vertexShader, fragmentShader);
-	}
-public:
-	GLShader() 
-		: Id(-1) { }
+	GLShader() { }
 
 	GLShader(GLVertexShaderLoader vertexShader, GLFragmentShaderLoader fragmentShader)
 	{
@@ -429,6 +393,7 @@ protected:
 		glLinkProgram(this->Id);
 
 		glGetProgramiv(this->Id, GL_LINK_STATUS, &success);
+
 		if (!success)
 		{
 			glGetProgramInfoLog(this->Id, 1024, NULL, infoLog);
@@ -441,7 +406,7 @@ protected:
 	}
 
 private:
-	unsigned int Id;
+	unsigned int Id = -1;
 
 	std::unordered_map<std::string, int> uniformLocations;
 };

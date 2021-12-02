@@ -179,5 +179,5 @@ void main()
         result += ApplySpotLight(spotLights[i], norm, fragPos, viewDir);
     }
 
-    fragColor = vec4(result, 1.0);
+    fragColor = vec4(result, texture(material.diffuse, texCoords).a);
 }

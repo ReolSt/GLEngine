@@ -10,7 +10,7 @@
 class GLTextureLoader
 {
 public:
-    static GLSharedPtr<GLTexture> Load(const std::string& fileName)
+    static GLSharedPtr<GLTexture> Load(const std::string& fileName, GLenum colorMode = GL_RGB, GLenum pixelType = GL_UNSIGNED_BYTE)
     {
         if (loadedTextures.find(fileName) != loadedTextures.end())
         {
@@ -18,7 +18,7 @@ public:
         }
 
         auto texture = GLCreate<GLTexture>();
-        texture->Load(fileName);
+        texture->Load(fileName, colorMode, pixelType);
 
         loadedTextures[fileName] = texture;
 

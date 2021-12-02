@@ -54,14 +54,14 @@ public:
         glBindTexture(GL_TEXTURE_2D, this->id);
     }
 
-    void Load(const std::string& fileName)
+    void Load(const std::string& fileName, GLenum colorMode = GL_RGB, GLenum pixelType = GL_UNSIGNED_BYTE)
     {
         unsigned char* data = stbi_load(fileName.c_str(), &this->width, &this->height, &this->channels, 0);
 
         assert(data != NULL);
 
         glBindTexture(GL_TEXTURE_2D, this->id);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->width, this->height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, colorMode , this->width, this->height, 0, colorMode, pixelType, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
         stbi_image_free(data);

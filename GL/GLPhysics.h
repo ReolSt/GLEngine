@@ -9,8 +9,24 @@
 #include "GLTransform.h"
 #include "GLMeshRenderer.h"
 
+using GLRigidBody = reactphysics3d::RigidBody;
+using GLPhysicsTransform = reactphysics3d::Transform;
+
+using GLCollisionShape = reactphysics3d::CollisionShape;
+using GLBoxShape = reactphysics3d::BoxShape;
+using GLCapsuleShape = reactphysics3d::CapsuleShape;
+
+using GLCollider = reactphysics3d::Collider;
+using GLPhysicsMaterial = reactphysics3d::Material;
+
+using GLBodyType = reactphysics3d::BodyType;
+
 class GLPhysics
 {
+public:
+	static const GLBodyType DYNAMIC = GLBodyType::DYNAMIC;
+	static const GLBodyType KIMEMATIC = GLBodyType::KINEMATIC;
+	static const GLBodyType STATIC = GLBodyType::STATIC;
 public:
 	GLPhysics()
 	{
